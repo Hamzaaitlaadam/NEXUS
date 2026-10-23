@@ -1,3 +1,77 @@
+
+let attempts = 3;
+let hasKey =false;
+
+alert(`You're trapped inside the digital fortess controlled by NEXUS.\n 
+
+Room 2-> NEXUS Challenge: NEXUS challenges the player to solve a logic puzzle.
+            The player has three attempts.
+            - Correct answer → Receive the key to unlock server room.
+            - Three wrong answers → Game Over.\n
+      ->The player must use the key won to open the server room.
+            
+            Press OK to begin the game.`)
+
+
+
+function securityRoom(){
+    alert(`Hello Human welcome to the NEXUS challenge.`);
+
+    while(attempts > 0 && hasKey === false){
+         
+     let answer = prompt(
+      `NEXUS SECURITY PUZZLE\n
+       "My first digit is 2.\n
+       My second digit is twice my first.\n
+       My third digit is one less than my second."\n
+       Attempts remaining: ${attempts}\n
+       What is my three-digit code?`
+    );
+
+      if(answer === null){
+         alert(`Game ended!`);
+         return hasKey;
+      }
+
+      answer = answer.trim();
+
+      if(!/^\d{3}$/.test(answer)){
+         alert(`Invalid input. Enter exactly 3 digits`);
+         continue;
+      }
+
+      if(answer === "243"){
+        hasKey = true;
+        alert(`NEXUS unlocks the server room. The player receives an access keycard.💳`)
+        return hasKey;
+      }else{
+         attempts--;
+
+         attempts === 0 ? alert(`Game Over, NEXUS has captured you.`) : alert(`Wrong answer try again.`)
+      }
+    }
+
+    return hasKey;
+}
+
+function startGame(){
+    let startAgain = true;
+
+    while(startAgain){
+        attempts = 3;
+        hasKey = false;
+
+         const result = securityRoom();
+        
+        startAgain = confirm(`Would you like to play again?`);
+    
+    }
+  alert(`Thanks for playing!`);
+}
+
+startGame();
+
+
 // Room 3 - The Server Room
 function room3() {
     const MAX_INVALID_ATTEMPTS = 1;
