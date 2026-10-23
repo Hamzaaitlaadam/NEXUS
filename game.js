@@ -1,10 +1,10 @@
-
+function securityRoom(){
 let attempts = 3;
 let hasKey =false;
 
 alert(`You're trapped inside the digital fortess controlled by NEXUS.\n 
 
-Room 2-> NEXUS Challenge: NEXUS challenges the player to solve a logic puzzle.
+   Room 2-> NEXUS Challenge: NEXUS challenges the player to solve a logic puzzle.
             The player has three attempts.
             - Correct answer → Receive the key to unlock server room.
             - Three wrong answers → Game Over.\n
@@ -12,9 +12,6 @@ Room 2-> NEXUS Challenge: NEXUS challenges the player to solve a logic puzzle.
             
             Press OK to begin the game.`)
 
-
-
-function securityRoom(){
     alert(`Hello Human welcome to the NEXUS challenge.`);
 
     while(attempts > 0 && hasKey === false){
