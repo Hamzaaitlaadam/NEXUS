@@ -1,24 +1,25 @@
 // Room 3 - The Server Room
 function room3() {
-    const MAX_INVALID_ATTEMPTS = 3;
+    const MAX_INVALID_ATTEMPTS = 1;
+    const CHOICE_KEYWORDS = {
+        a: ["cut", "cable", "pull", "red"],
+        b: ["accept", "offer", "terminal", "assistant", "join"]
+    };
     let droneDisabled = false;
 
     try {
         alert(
             "You enter the server room. Hundreds of machines hum around you.\n" +
             "Security drones patrol the ceiling, scanning for intruders.\n\n" +
-            "A thick red cable powers their systems. Nearby, a terminal displays a message from NEXUS."
+            "A thick red cable powers their systems. Nearby, a terminal displays a message from NEXUS:\n\n" +
+            "\"Become my assistant. You will never lose a game again. The drones will not touch you.\""
         );
 
         let choice = null;
         let invalidAttempts = 0;
 
         while (choice === null) {
-            const input = prompt(
-                "Choose:\n" +
-                "A - Cut the red cable\n" +
-                "B - Accept NEXUS's offer"
-            );
+            const input = prompt("The drones are closing in. What do you do?");
 
             if (input === null) {
                 alert("You hesitate too long. The drones close in.\n\nGAME OVER");
@@ -26,16 +27,17 @@ function room3() {
             }
 
             const normalized = input.trim().toLowerCase();
-            if (normalized === "a" || normalized === "b") {
-                choice = normalized;
+            const matched = Object.keys(CHOICE_KEYWORDS).find(key =>
+                CHOICE_KEYWORDS[key].some(word => normalized.includes(word))
+            );
+            if (matched) {
+                choice = matched;
             } else {
                 invalidAttempts++;
                 if (invalidAttempts >= MAX_INVALID_ATTEMPTS) {
                     alert("The drones lock onto your confusion and capture you.\n\nGAME OVER");
                     return false;
                 }
-                alert("Invalid choice. Please enter A or B. (" +
-                    (MAX_INVALID_ATTEMPTS - invalidAttempts) + " attempt(s) left)");
             }
         }
 
