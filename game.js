@@ -202,7 +202,7 @@ function exitGate() {
                 }
 
                 alert("🔒 ACCESS DENIED\n\n🤖 NEXUS: \"Wrong. Hahahaha...\" 😈");
-                passwordAttempts--;
+                // passwordAttempts--;
             }
 
             if (!won) {
