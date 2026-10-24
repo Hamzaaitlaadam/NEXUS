@@ -7,7 +7,7 @@ let dronesDisabled;
 let passwordAttempts;
 
 // Results from this function: if the player loses, gameOver = true; if they win, currentRoom = 2
-function Corridor() {
+function corridor() {
     if (currentRoom >= 1) {
         let door;
         let isValid = false;
@@ -108,10 +108,10 @@ function securityRoom(){
     }
 }
 // Room 3 - The Server Room
-function room3() {
+function serverRoom() {
     if(currentRoom>=3){
 
-        const MAX_INVALID_ATTEMPTS = 1;
+        const MAX_INVALID_ATTEMPTS = 2;
         const CHOICE_KEYWORDS = {
             a: ["cut", "cable", "pull", "red"],
             b: ["accept", "offer", "terminal", "assistant", "join"]
@@ -171,7 +171,7 @@ function room3() {
                 );
             }
         } catch (error) {
-            console.error("room3 failed:", error);
+            console.error("serverRoom failed:", error);
             return false;
         }
         
@@ -180,7 +180,7 @@ function room3() {
 }
 
 // If he passes, gameWon = true; if he fails, gameOver = true
-function EXIT_GATE() {
+function exitGate() {
     if (currentRoom == 4) {
         let pass;
         let won = false;
@@ -233,43 +233,37 @@ function game(){
 
     alert(`🤖 NEXUS: "${name}... how fitting. Nobody has ever escaped my fortress."`);
     alert("🏰 You wake up on a cold metal floor \u{1F976}.\n\n🟠 The lights flicker. The alarms are screaming.\n\n💨 You have no memory of how you got here.");
-    alert("At the end, you see two doors \u{1F6AA}:.\n\no One blue \u{1F535} and one orange \u{1F7E0}.");
+    alert("At the end, you see two doors \u{1F6AA}:.\n\n• One blue \u{1F535} and one orange \u{1F7E0}.");
     alert("🤖 NEXUS: \"Two doors. One path to freedom. One path to... me.\" 😈");
 
     if (!confirm("🚪 Do you dare to enter the corridor?\n\nOK = Enter\nCancel = Stay")) {
         alert("🤖 NEXUS: \"Staying put? Then the floor will make the choice for you.\"");
         alert("🕳️ The floor disappears beneath you...\n\n💀 GAME OVER");
-        return ;
-    } else {
-        alert("🚶 You walk into the long corridor...");
-        Corridor();
-        if(gameOver){
-            return;
-        }else{
-            hasKeycard = securityRoom();
-            if(!hasKeycard){
-                gameOver=true;
-                return;
-            }else{
-                dronesDisabled = room3();
-                if(!dronesDisabled){
-                    gameOver=true;
-                    return;
-                }else{
-                    EXIT_GATE();
-                    if(gameOver){
-                        return;
-                    }else{
-                       if(gameWon){
-                        alert("🤖 NEXUS: \"No... that's impossible. That password was never meant to be found!\" 😨\n\n⚙️ The steel gate groans and slowly opens.");
-                        alert("☀️ Blinding sunlight floods the room.\n\n🏰💥 Behind you, the fortress collapses into dust.\n\n🏃 You run through the gate and don't look back.\n\n🤖 NEXUS: \"Nooooo... my system...\"\n> CONNECTION LOST_");
-                        alert(`🌅 You fall to your knees in the grass, breathing the air of freedom.\n\n🎉 CONGRATULATIONS, ${name.toUpperCase()}! 🎉\n🏆 YOU DEFEATED NEXUS AND ESCAPED THE FORTRESS.`);
-                        }
-                    }
-                }
-            }
-        }
+        return;
     }
+
+    alert("🚶 You walk into the long corridor...");
+    corridor();
+    if (gameOver) return;
+
+    hasKeycard = securityRoom();
+    if (!hasKeycard) {
+        gameOver = true;
+        return;
+    }
+
+    dronesDisabled = serverRoom();
+    if (!dronesDisabled) {
+        gameOver = true;
+        return;
+    }
+
+    exitGate();
+    if (gameOver || !gameWon) return;
+
+    alert("🤖 NEXUS: \"No... that's impossible. That password was never meant to be found!\" 😨\n\n⚙️ The steel gate groans and slowly opens.");
+    alert("☀️ Blinding sunlight floods the room.\n\n🏰💥 Behind you, the fortress collapses into dust.\n\n🏃 You run through the gate and don't look back.\n\n🤖 NEXUS: \"Nooooo... my system...\"\n> CONNECTION LOST_");
+    alert(`🌅 You fall to your knees in the grass, breathing the air of freedom.\n\n🎉 CONGRATULATIONS, ${name.toUpperCase()}! 🎉\n🏆 YOU DEFEATED NEXUS AND ESCAPED THE FORTRESS.`);
 }
 
 function newGame(){
